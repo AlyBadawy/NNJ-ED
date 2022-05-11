@@ -9,12 +9,14 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = React.useState();
+  const [isLoading, setIsLoading] = React.useState(true);
 
   React.useEffect(() => {
     const unSubscribe = fbAuth.onAuthStateChanged((user) => {
       if (user && !!user.displayName) {
         setCurrentUser(user);
       }
+      setIsLoading(false);
     });
     return unSubscribe;
   }, []);
@@ -41,14 +43,23 @@ export const AuthProvider = ({ children }) => {
     return fbAuth.signInWithEmailAndPassword(email, password);
   };
 
+  const logOut = () => {
+    return fbAuth.signOut().then((res) => {
+      setCurrentUser(null);
+    });
+  };
+
   const contextValue = {
     currentUser,
     signUp,
     logIn,
+    logOut,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>
+      {!isLoading && children}
+    </AuthContext.Provider>
   );
 };
 
