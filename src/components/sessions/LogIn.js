@@ -5,13 +5,11 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Contexts/AuthContext";
 import CenterContainer from "../UI/CenterContainer";
 
-const SignUp = () => {
+const LogIn = () => {
   const emailRef = React.useRef();
   const passwordRef = React.useRef();
-  const passwordConfRef = React.useRef();
-  const callSignRef = React.useRef();
 
-  const { signUp } = useAuth();
+  const { logIn } = useAuth();
 
   const [error, setError] = React.useState();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -22,15 +20,8 @@ const SignUp = () => {
     evt.preventDefault();
     setIsLoading(true);
     setError(null);
-    if (passwordRef.current.value !== passwordConfRef.current.value) {
-      setError("Password confirmation doesn't match password");
-      return;
-    }
-    signUp(
-      emailRef.current.value,
-      passwordRef.current.value,
-      callSignRef.current.value
-    )
+
+    logIn(emailRef.current.value, passwordRef.current.value)
       .then((res) => {
         nav("/", { replace: true });
       })
@@ -47,7 +38,7 @@ const SignUp = () => {
       <div className="w-100 app-wrapper">
         <Card>
           <Card.Body>
-            <h2 className="text-center mb-4">Sign Up</h2>
+            <h2 className="text-center mb-4">Log In</h2>
             <Form onSubmit={submitHandler}>
               {!!error && <Alert variant="danger">{error}</Alert>}
               <Form.Group className="mt-4">
@@ -69,29 +60,9 @@ const SignUp = () => {
                   ref={passwordRef}
                 ></Form.Control>
               </Form.Group>
-              <Form.Group className="mt-4">
-                <Form.Label htmlFor="password_confirmation">
-                  Password Confirmation
-                </Form.Label>
-                <Form.Control
-                  id="password_confirmation"
-                  type="password"
-                  required
-                  ref={passwordConfRef}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group className="mt-4">
-                <Form.Label htmlFor="callsign">Callsign:</Form.Label>
-                <Form.Control
-                  id="callsign"
-                  type="text"
-                  required
-                  ref={callSignRef}
-                ></Form.Control>
-              </Form.Group>
               {!isLoading && (
                 <Button className="w-100 mt-4" type="submit">
-                  Sign up!
+                  Log In!
                 </Button>
               )}
               {isLoading && (
@@ -112,11 +83,11 @@ const SignUp = () => {
           </Card.Body>
         </Card>
         <div className="w-100 text-center mt-2">
-          Already have an account? <Link to="/login">Log In</Link>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
         </div>
       </div>
     </CenterContainer>
   );
 };
 
-export default SignUp;
+export default LogIn;

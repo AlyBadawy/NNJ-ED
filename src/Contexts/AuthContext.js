@@ -37,9 +37,14 @@ export const AuthProvider = ({ children }) => {
       });
   };
 
+  const logIn = (email, password) => {
+    return fbAuth.signInWithEmailAndPassword(email, password);
+  };
+
   const contextValue = {
     currentUser,
     signUp,
+    logIn,
   };
 
   return (

@@ -1,20 +1,24 @@
-import { Container } from "react-bootstrap";
-import { AuthProvider } from "../../Contexts/AuthContext";
-import SignUp from "../sessions/SignUp";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import style from "./app.module.sass";
+import { AuthProvider } from "../../Contexts/AuthContext";
+import HomePage from "../HomePage/HomePage";
+import SignUp from "../sessions/SignUp";
+import LogIn from "../sessions/LogIn";
+
+import "./app.sass";
 
 function App() {
   return (
-    <AuthProvider>
-      <Container
-        className={`d-flex align-items-center justify-content-center ${style["app-container"]}`}
-      >
-        <div className={`w-100 ${style["app-wrapper"]}`}>
-          <SignUp />
-        </div>
-      </Container>
-    </AuthProvider>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<LogIn />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
