@@ -1,5 +1,5 @@
 import React from "react";
-import { fbAuth } from "../helpers/firebase";
+import { fbAuth, fbData } from "../helpers/firebase";
 
 const AuthContext = React.createContext();
 

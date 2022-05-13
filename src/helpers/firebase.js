@@ -1,5 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
+import "firebase/compat/database";
 
 const fb = firebase.initializeApp({
   apiKey: process.env.REACT_APP_apiKey,
@@ -12,3 +13,4 @@ const fb = firebase.initializeApp({
 });
 
 export const fbAuth = fb.auth();
+export const fbData = fb.database();
